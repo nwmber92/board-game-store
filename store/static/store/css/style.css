@@ -1,0 +1,87 @@
+.btn {
+    border-radius: 0.25rem;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.form-select {
+    width: auto !important;
+}
+
+.navbar-toggler:focus {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.carousel-item {
+    max-height: 20rem;
+    overflow: hidden;
+}
+
+.carousel-item > img {
+    filter: blur(5px);
+    transform: scale(1.2, 1.2);
+    width: 100%;
+}
+
+.carousel-caption > h1 {
+    text-shadow: 2px 2px 4px black;
+}
+
+.carousel-caption > p {
+    text-shadow: 2px 2px 4px black;
+}
+
+#dice1, #dice2, #dice-plus {
+    display: inline-block;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+}
+
+#dice1 {
+    animation-name: spin1;
+    animation-fill-mode: forwards;
+}
+
+#dice2 {
+    animation-name: spin2;
+    animation-fill-mode: forwards;
+}
+
+#dice-plus {
+    animation-name: spin3;
+    animation-fill-mode: forwards;
+}
+
+@keyframes spin1 {
+    from {
+        transform: rotate(90deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin2 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin3 {
+    from {
+        transform: rotate(120deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

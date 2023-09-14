@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {% block current_page %}Добавление игры{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name != 'exist' %}
+                            {% if field.name != 'image' %}
+                                <div class="mb-4"> {# Все остальные поля #}
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                                    {{ field }}
+                                </div>
+                            {% else %}
+                                <div class="mb-4"> {# Поле с изображением #}
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                                    <br>{{ field }}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div> {# Поле exist #}
+                                <label class="mb-3" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <span>
+                        <input class="btn btn-success mb-2 btn-block" type="submit" value="Добавить"
+                               style="width: 100px;"><br>
+                        <a href="{% url 'store_index' %}" class="btn btn-outline-primary btn-block" type="submit"
+                           style="width: 100px;">Отмена</a>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

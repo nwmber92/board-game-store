@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Логин{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card shadow">
+            <div class="card-body m-3">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-floating mb-3">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                    {% endfor %}
+                    <div class="mb-3">
+                        <span class="text-secondary">Еще нет аккаунта?</span>
+                        <a href="{% url 'auth_registration' %}">Создать</a>
+                    </div>
+                    <div>
+                        <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="Войти">
+                        <a href="{% url 'store_index' %}" class="w-100 btn btn-lg btn-outline-primary" type="submit">Уйти</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

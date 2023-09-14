@@ -1,0 +1,42 @@
+<div class="container px-0 pt-0 pb-3 py-sm-3">
+    <div class="border-start border-end border-5 bg-body-tertiary border-warning">
+        <nav class="navbar navbar-expand-sm py-0">
+            <div class="container p-0 justify-content-between">
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+                        aria-expanded="false">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{% url 'store_index' %}"
+                               class="link-info btn btn-secondary rounded-0 border-0 w-100">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'game_list' %}"
+                               class="link-info btn btn-secondary rounded-0 border-0 w-100">Каталог</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'cart_detail' %}"
+                               class="link-info btn w-100 btn-secondary rounded-0 border-0">Корзина</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown col-12 col-sm-auto">
+                    {% if user.is_anonymous %}
+                        <a href="{% url 'auth_login' %}" class="btn btn-secondary rounded-0 border-0 w-100">Войти</a>
+                    {% else %}
+                        <button class="btn btn-secondary dropdown-toggle rounded-0 border-0 w-100" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user|upper }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark rounded-0 border-0 py-0 text-center w-100"
+                            style="min-width: 5rem;">
+                            <li><a class="dropdown-item" href="{% url 'auth_logout' %}">Выйти</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

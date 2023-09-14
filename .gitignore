@@ -1,0 +1,12 @@
+__pycache__/
+/static/
+/media/
+.idea/
+venv/
+
+.env
+*.pyc
+*.log
+.coverage
+db.sqlite3
+local_settings.py

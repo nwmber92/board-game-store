@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {% block current_page %}Обратная связь{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="bg-white shadow-sm p-4 border">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <div class="mb-3">
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <input class="btn btn-success mb-3" type="submit" value="Отправить" style="width:100px;">
+                <br>
+                <a href="{% url 'store_index' %}" class="btn btn-outline-primary" type="submit" style="width:100px;">Отмена</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+

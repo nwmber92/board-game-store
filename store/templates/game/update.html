@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {% block current_page %}{{ title }}{% endblock %}
+{% endblock %}
+
+{# Структура повторяет шаблон create #}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="card shadow-sm p-3">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% if field.name != 'exist' %}
+                            {% if field.name != 'image' %}
+                                <div class="mb-4">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                                    {{ field }}
+                                </div>
+                            {% else %}
+                                <div class=" mb-4">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                                    <br>{{ field }}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div>
+                                <label class="ms-2 mb-3" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <span>
+                        <input class="btn btn-success mb-2 btn-block" type="submit" value="Обновить"
+                               style="width: 100px;"><br>
+                        <a href="{% url 'store_index' %}" class="btn btn-outline-primary btn-block" type="submit"
+                           style="width: 100px;">Отмена</a>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

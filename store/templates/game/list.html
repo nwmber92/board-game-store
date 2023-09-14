@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}
+    {% block current_page %}Каталог{% endblock %}
+{% endblock %}
+
+{% block permission %}
+    <a href="{% url 'game_create' %}" class="nav-link link-secondary">
+        <h1>
+            <i id="dice-plus" class="bi bi-plus-square"></i>
+            Добавить игру
+        </h1>
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="row row-cols-1 row-cols-sm-2  g-3 justify-content-center">
+            {% for game in game_list %}
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <h3 class="text-bg-danger p-2 z-3 position-absolute">{{ game.price }} &#8381</h3>
+                        {% if game.image %}
+                            <img src="{{ game.image.url }}" class="card-img-top rounded-0 p-4 p-md-5" alt="item.title">
+                        {% else %}
+                            <img src="{% static 'store/image/phldr.jpg' %}" class="card-img-top rounded-0"
+                                 alt="item.title">
+                        {% endif %}
+                        <div class="card-body text-center pt-0">
+                            <h2 class="card-title">{{ game.title }}</h2>
+                            <p class="card-text text-secondary my-3">{{ game.short_description }}</p>
+                        </div>
+                        <div class="container mb-3">
+                            <a class="btn btn-sm btn-outline-secondary w-100" href="{{ game.get_absolute_url }}">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div><br>
+
+    {# Пагинатор #}
+
+    {% if page_obj.has_other_pages %}
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link rounded-0" href="?page={{ page_obj.previous_page_number }}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                    {% if page_obj.number == page %}
+                        <li class="page-item">
+                            <a class="page-link rounded-0 bg-primary text-light" href="#">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link rounded-0" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link rounded-0 bg-prim" href="?page={{ page_obj.next_page_number }}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

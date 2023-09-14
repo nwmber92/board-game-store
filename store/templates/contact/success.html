@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block title %}Успех{% endblock %}
+
+{% block x %}
+    <div class="border-top border-bottom py-3">
+        <div class="d-flex align-items-center justify-content-center text-success" style="height: 50vh;">
+            <div>
+                {% block current_page %}
+                    <h1 class="fw-bold display-4">Успех!</h1>
+                {% endblock %}
+                <div class="display-3 ms-2">
+                    <i id="dice2" class="bi-dice-6 g-3"></i>
+                    <i id="dice1" class="bi-dice-6 g-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

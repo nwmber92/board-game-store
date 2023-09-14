@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {% block current_page %}Подписка{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center">
+        {% if success %}
+            <h1 class="fw-bold text-success mb-4 display-4">Успех!</h1>
+        {% else %}
+            <div class="bg-white shadow-sm p-4 border">
+            <form method="POST" class="was-validated">
+                {% csrf_token %}
+                <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                <div class="mb-3">
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <input class="btn btn-success" type="submit" value="Подписаться">
+                <br>
+            </form>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

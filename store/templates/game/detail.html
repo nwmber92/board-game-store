@@ -1,0 +1,83 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}
+    {% block current_page %}{{ game.title }}{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="card shadow-sm">
+            <div class="d-none d-sm-flex justify-content-center pt-3">
+                {% if game.image %}
+                    <img src="{{ game.image.url }}" class="card-img-top rounded-0 w-50 pt-5" alt="{{ game.title }}">
+                {% else %}
+                    <img src="{% static 'store/image/phldr.jpg' %}" class="card-img-top rounded-0 w-50"
+                         alt="{{ game.title }}">
+                {% endif %}
+            </div>
+            <div class="card-body mx-3">
+                {% if game.short_description %}
+                    <label class="form-label fw-bold">Об игре:</label>
+                    <p class="card-text"> {{ game.short_description }}</p>
+                {% endif %}
+                {% if game.description %}
+                    <label class="form-label fw-bold">Описание:</label>
+                    <p class="card-text"> {{ game.description }}</p>
+                {% endif %}
+                {% if game.rules %}
+                    <label class="form-label fw-bold">Правила игры:</label>
+                    <p class="card-text">{{ game.rules }}</p>
+                {% endif %}
+                <h1 class="card-text text-end">{{ game.price }} &#8381</h1>
+                {% if game.exist %}
+                    <p class="card-text text-end text-success">В наличии</p>
+                {% else %}
+                    <p class="card-text text-end text-danger">Нет в наличии</p>
+                {% endif %}
+
+                {# Селектор для корзины #}
+
+                <form method="post" action="{% url 'cart_add' game.pk %}">
+                    {% csrf_token %}
+                    <div class="row justify-content-end align-center">
+                        <div class="col-auto pe-0">{{ cart_form }}</div>
+                        {% if game.exist %}
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        {% else %}
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-secondary disabled">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </form>
+                <a class="btn btn-outline-primary" href="{% url 'game_list' %}">Назад</a>
+            </div>
+
+            {# Футер карточки, видимый персоналу #}
+
+            {% if perms.games.change_game %}
+                <div class="card-footer">
+                    <small class="text-body-secondary">
+                        <span>Последнее обновление: {{ game.date_update|timesince }} назад</span><br>
+                        <span>Опубликовано: {{ game.date_create|date:"d-m-Y H:i " }}</span>
+                    </small>
+                    <div class="d-flex justify-content-between mt-2">
+                        <a href="{% url 'game_update' game.pk %}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+                        <form method="POST" action="{% url 'game_delete' game.pk %}">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-sm btn-outline-secondary" value="Удалить">
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

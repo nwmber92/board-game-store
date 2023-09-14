@@ -1,0 +1,78 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    {% block current_page %}Корзина{% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="container p-sm-0">
+        <div class="mb-3 bg-white p-4 shadow-sm border border-1">
+            {% if cart %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr class="fw-bold">
+                            <th class="text-start">Название</th>
+                            <th class="text-center">Шт.</th>
+                            <th class="text-center">Цена</th>
+                            <th class="text-end">Всего</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in cart %}
+                            {% with item_obj=item.game %}
+                                <tr>
+                                    <td class="text-start">
+                                        <a class="nav-link link-primary fw-bold" href="{% url 'game_detail' item_obj.pk %}">
+                                            {{ item_obj.title }}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.count_item }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.price_item }}
+                                    </td>
+                                    <td class="text-end">
+                                        {{ item.total_price }}
+                                    </td>
+                                    <td class="border-bottom-0 text-center">
+                                        <a class="nav-link link-danger" href="{% url 'cart_remove' item_obj.pk %}">
+                                            <i class="bi bi-x-square-fill"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endwith %}
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td class="fw-bold text-start border-bottom-0 table-group-divider">Итого:</td>
+                            <td colspan="2" class="border-bottom-0 table-group-divider"></td>
+                            <td class="fw-bold text-end border-bottom-0 table-group-divider">{{ cart.get_total_price }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <a href="{% url 'game_list' %}" class="btn btn-primary mb-3 col-12 col-md-auto">Продолжить
+                            покупки</a>
+                        <a href="#" class="btn btn-secondary disabled mb-3 col-12 col-md-auto mx-md-3">Перейти к
+                            оформлению</a>
+                        <a href="{% url 'cart_clear' %}" class="btn btn-danger col-12 col-md-auto b mb-3">Очистить
+                            корзину</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="d-flex align-items-center justify-content-center p-3" style="height:25vh;">
+                    <div class="text-center">
+                        <h1 class="text-primary">Здесь пока ничего нет</h1><br>
+                        <a href="{% url 'game_list' %}" class="btn btn-lg btn-primary">Перейти в каталог</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

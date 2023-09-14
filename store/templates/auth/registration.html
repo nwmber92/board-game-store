@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card shadow">
+            <div class="card-body m-3">
+                <form method="POST" class="">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-floating">
+                            {{ field }}
+                            <div class="form-text text-danger">
+                                {{ field.errors }}
+                            </div>
+                            <p class="form-text">{{ field.help_text }}</p>
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                    {% endfor %}
+                    <div class="mb-3">
+                        <span class="text-secondary">Уже есть аккаунт?</span>
+                        <a href="{% url 'auth_login' %}">Войти</a>
+                    </div>
+                    <div>
+                        <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Зарегистрироваться</button>
+                        <a href="{% url 'store_index' %}" class="w-100 btn btn-lg btn-outline-primary" type="button">Отмена</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
